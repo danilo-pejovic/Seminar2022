@@ -1,8 +1,8 @@
 from django.template.defaulttags import url
 from django.urls import include, path
 from rest_framework import routers
-
-from appointment import views
+from rest_framework.authtoken import views
+#from appointment import views
 
 router = routers.DefaultRouter()
 # router.register(r'users', views.UserViewSet)
@@ -12,7 +12,8 @@ router = routers.DefaultRouter()
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('',include('appointment.urls')),
-    path('',include('users.urls'))
+    path('user/',include('users.urls')),
+    path('api-token-auth/', views.obtain_auth_token)
 ]
