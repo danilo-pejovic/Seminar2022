@@ -4,8 +4,8 @@ services:
   backend:
     build: ./backend
     command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
-    expose:
-      - 8000
+    ports:
+      - 8000:8000
     volumes:
     - ./backend:/backend
     env_file:
@@ -22,8 +22,13 @@ services:
     build: ./nginx
     ports:
       - 1337:80
+      - 443:443
+    volumes:
+    - ./backend:/backend
     depends_on:
       - backend
+      - db
 
-#volumes:
-#  postgres_data:
+volumes:
+  postgres_data:
+  static_volume:
