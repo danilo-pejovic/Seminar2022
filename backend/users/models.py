@@ -7,8 +7,11 @@ from django.contrib.auth.models import PermissionsMixin
 
 from django.utils.translation import gettext_lazy as _
 
+
+
 class User(AbstractUser):
-    pass
+    is_provider=models.BooleanField('Is user only a customer or also provider of services', default=False)
+    
 
 
 # class UserManager(UserManager):
