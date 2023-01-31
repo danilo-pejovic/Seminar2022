@@ -12,7 +12,7 @@ const LargeButton = (props) => {
     
     const token = authTokens
 
-    await fetch(`http://seminar2022:8000/schedule/timeslots/update/${id}/`, {
+    await fetch(`http://192.168.43.187:8000/schedule/timeslots/update/${id}/`, {
       method: 'PUT',
       body: JSON.stringify({ is_available: false }),
       headers: {
@@ -105,9 +105,8 @@ const CourtDetail = ({ route: { params } }) => {
 
   const fetchData = async (date) => {
     try {
-      console.log(ownerId)
-      console.log(`http://seminar2022:8000/schedule/?owner=${ownerId.ownerId}`)
-      const response = await fetch(`http://seminar2022:8000/schedule/?owner=${ownerId.ownerId}`, {
+      
+      const response = await fetch(`http://192.168.43.187:8000/schedule/?owner=${ownerId.ownerId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +131,7 @@ const CourtDetail = ({ route: { params } }) => {
 
   const fetchObject = async (id, date) => {
     try {
-      const response = await fetch(`http://seminar2022:8000/schedule/timeslots/?calendar=${id}&timeslote_date=${date.toISOString().substring(0, 10)}`, {
+      const response = await fetch(`http://192.168.43.187:8000/schedule/timeslots/?calendar=${id}&timeslote_date=${date.toISOString().substring(0, 10)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

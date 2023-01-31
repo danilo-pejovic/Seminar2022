@@ -6,12 +6,11 @@ import AuthContext from "../context/AuthContext";
 
 export default function Register() {
   const [name, setName] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [openingTimeWeekday, setOpeningTimeWeekday] = useState("");
-  const [closingTimeWeekday, setClosingTimeWeekday] = useState("");
-  const [openingTimeWeekend, setOpeningTimeWeekend] = useState("");
-  const [closingTimeWeekend, setClosingTimeWeekend] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   
 
   let handleFormSubmit = async () => {
@@ -19,16 +18,16 @@ export default function Register() {
     console.log(JSON.stringify({
       'username': name,
       'email': startDate,
-      'password': endDate,
-      'password2': openingTimeWeekday,
-      'first_name': closingTimeWeekday,
+      'password': password,
+      'password2': confirmpassword,
+      'first_name': firstname,
     
-      'last_name': openingTimeWeekend
+      'last_name': lastname
       
     }))
     
 
-    let response = await fetch("http://seminar2022:8000/schedule/", {
+    let response = await fetch("http://192.168.1.211:8000/schedule/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -37,10 +36,9 @@ export default function Register() {
         'username': name,
         'email': startDate,
         'password': endDate,
-        'password2': openingTimeWeekday,
-        'first_name': closingTimeWeekday,
-      
-        'last_name': openingTimeWeekend
+        'password2': confirmpassword,
+        'first_name': firstname,
+        'last_name': lastname
         
       }),
     });

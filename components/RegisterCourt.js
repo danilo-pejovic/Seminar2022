@@ -1,5 +1,6 @@
 import React, { useState, useEffect,useContext } from "react";
-import { Text, View, TouchableOpacity, TextInput, Picker } from "react-native";
+import { Text, View, TouchableOpacity, TextInput } from "react-native";
+import {Picker} from '@react-native-picker/picker';
 import AuthContext from "../context/AuthContext";
 
 const timeOptions = () => {
@@ -36,7 +37,7 @@ export default function RegisterCalendar() {
       }))
     
 
-    let response = await fetch("http://seminar2022:8000/schedule/", {
+    let response = await fetch("http://192.168.43.187:8000/schedule/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +103,7 @@ export default function RegisterCalendar() {
                 {timeOptions()}
         </Picker>
     </View>
-<TouchableOpacity onPress={handleFormSubmit(authTokens)}>
+<TouchableOpacity onPress={() => handleFormSubmit(authTokens)}>
             <Text>Submit</Text>
 </TouchableOpacity>
 </View>

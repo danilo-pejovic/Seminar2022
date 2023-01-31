@@ -1,7 +1,7 @@
 import React, {createContext, useState, useEffect, useContext} from "react"
 import jwt_decode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import {useNavigate } from 'react-router-dom'
+import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const AuthContext = createContext()
 
@@ -9,12 +9,12 @@ export default AuthContext;
 
 export const AuthProvider = ({children}) => {
     let [authTokens,setAuthTokens] = useState('')
+    const navigation = useNavigation();
 
     const clearStorage = async () => {
         
         try {
           await AsyncStorage.clear();
-          alert('Storage successfully cleared!');
         } catch (e) {
           //alert('Failed to clear the async storage.');
         }
@@ -69,7 +69,7 @@ export const AuthProvider = ({children}) => {
 
     let loginUser = async (username,password ) => {
         
-        let response = await fetch('http://seminar2022:8000/user/token/', {
+        let response = await fetch('http://192.168.43.187:8000/user/token/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -102,7 +102,7 @@ export const AuthProvider = ({children}) => {
 
         console.log(authTokens)
 
-        let response = await fetch('http://seminar2022:8000/user/token/refresh/', {
+        let response = await fetch('http://192.168.43.187:8000/user/token/refresh/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

@@ -17,50 +17,31 @@ import Register from './accounts/Register';
 
 import * as ImagePicker from 'expo-image-picker';
 
-let {user, logoutUser} = useContext(AuthContext)
-function HomeScreen({ navigation }) {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const pickImageAsync = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      quality: 1,
-    });
 
-    if (!result.canceled) {
-      console.log(result);
-      setSelectedImage(result.assets[0].uri);
-    } else {
-      alert('You did not select any image.');
-    }
-  };
+
+function HomeScreen({ navigation }) {
+  const selectedImage=null
+  let {user, logoutUser} = useContext(AuthContext)
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.imageContainer}>
         <ImageViewer
           placeholderImageSource={PlaceholderImage}
           selectedImage={selectedImage}
+
         />
       </View>
       <View style={styles.footerContainer}>
-        <Button theme="primary" label="Register a calendar" onPress={() => navigation.navigate('CourtsAvailable')} />
-        <Button theme ="primary" title="See Available Courts"
+        <Button theme="primary" label="See what courts are available" onPress={() => navigation.navigate('CourtsAvailable')} />
+        <Button theme ="primary" title="RegisterCalendar" 
           onPress={() => navigation.navigate('RegisterCalendar')}
           label="Register a new court" />
+          if (!user){
+            <Button theme ="primary" title="Login"
+            onPress={() => navigation.navigate('Login')}
+            label="Login/Register" />}
 
-{User ? (
-            <Button theme ="primary" title="Logout"
-            onPress={logoutUser}
-            label="Log out" />
-  
-          ) : (
-            <Button theme ="primary" title="Go to Login"
-          onPress={() => navigation.navigate('Login')}
-          label="Login/Register" />
-
-          )}
-        <Button theme ="primary" title="Go to Login"
-          onPress={() => navigation.navigate('Login')}
-          label="Login/Register" />
+        
 
       </View>
       <StatusBar style="auto" />
