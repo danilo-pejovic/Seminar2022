@@ -22,7 +22,7 @@ from rest_framework.permissions import IsAuthenticated
 from users.serializers import UserSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import RegisterSerializer, UserDetailSerializer
+from .serializers import RegisterSerializer, UserDetailSerializer, ChangePasswordSerializer
 from rest_framework import generics
 from .models import User
 
@@ -38,6 +38,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token['username'] = user.username
+        token['is_provider'] = user.is_provider
         # ...
 
         return token
@@ -66,3 +67,10 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserDetailSerializer
+
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+
+    queryset = User.objects.all()
+    serializer_class = ChangePasswordSerializer

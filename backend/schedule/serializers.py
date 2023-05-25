@@ -31,9 +31,22 @@ class TimeSlotSerializer(serializers.ModelSerializer):
         model = TimeSlot
         fields = '__all__'
 
+class TimeSlotSerializerPlayer(serializers.ModelSerializer):
+    # owner = serializers.ReadOnlyField(source='owner.username')
+    class Meta:
+        ordering = ['timeslote_date','start_time']
+        model = TimeSlot
+        fields = '__all__'
+
 
 class CalendarTimeSlotSerializer(serializers.ModelSerializer):
     timeslots_owned=serializers.PrimaryKeyRelatedField(many=True, queryset=TimeSlot.objects.all())
     class Meta:
         model = Calendar
         fields = ['id','name','timeslots_owned']
+
+class CalendarDeleteSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Calendar
+        fields = ['id']
