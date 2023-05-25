@@ -15,9 +15,7 @@ function classNames(...classes) {
 
 export default function Header() {
   const [modal, setModal] = useState(false);
-
-  let {user} = useContext(AuthContext)
-
+  let { user } = useContext(AuthContext);
 
   return (
     <>
@@ -27,7 +25,7 @@ export default function Header() {
         className={({ open }) =>
           classNames(
             open ? "fixed inset-0 z-40 overflow-y-auto" : "",
-            "bg-white shadow-sm lg:static lg:overflow-y-visible"
+            "bg-teal-700 shadow-sm lg:static lg:overflow-y-visible"
           )
         }
       >
@@ -37,66 +35,22 @@ export default function Header() {
               <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
                 <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
-                    <Link to="/" className="font-normal text-xl  text-teal-700">
+                    <Link to="/" className="font-normal text-xl text-white">
                       Seminar 2022
                     </Link>
                   </div>
                 </div>
-                {/* <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
-                  <div className="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
-                    <div className="w-full">
-                      <label htmlFor="search" className="sr-only">
-                        Search
-                      </label>
-                      <div className="relative">
-                        <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                          <SearchIcon
-                            className="h-5 w-5 text-gray-400"
-                            aria-hidden="true"
-                          />
-                        </div>
-                        <input
-                          id="search"
-                          name="search"
-                          className="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                          placeholder="Search"
-                          type="search"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-                
-               {/* <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
-                  
-                  <Popover.Button className="-mx-2 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500">
-                    <span className="sr-only">Open menu</span>
-                    {open ? (
-                      <XIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Popover.Button>
-                </div> */}
 
-                <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                  {/* <a
-                    href="/"
-                    className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </a> */}
-
-                  {/* Profile dropdown */}
+                <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-10">
                   {user && (
-                    <Menu as="div" className="flex-shrink-0 relative ml-5">
+                    <Menu as="div" className="flex-shrink-0 relative ml-auto">
                       <div>
                         <Menu.Button className="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 rounded-full"
-                            src={ "https://res.cloudinary.com/dmtc1wlgq/image/upload/v1641911896/media/avatar/default_zrdbiq.png"
+                            src={
+                              "https://res.cloudinary.com/dmtc1wlgq/image/upload/v1641911896/media/avatar/default_zrdbiq.png"
                             }
                             alt=""
                           />
@@ -132,7 +86,6 @@ export default function Header() {
                               className="block py-2 px-4 text-sm text-gray-700"
                               onClick={() => setModal(true)}
                             >
-                              {" "}
                               Logout
                             </button>
                           </Menu.Item>
@@ -165,7 +118,7 @@ export default function Header() {
                       Courts Available
                     </Link>
                   )}
-                  {user && (
+                  {user && user.is_provider && (
                     <Link
                       to="/courts/create"
                       className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
@@ -176,104 +129,6 @@ export default function Header() {
                 </div>
               </div>
             </div>
-
-            <Popover.Panel as="nav" className="lg:hidden" aria-label="Global">
-              <div className="max-w-3xl mx-auto px-2 pt-2 pb-3 space-y-1 sm:px-4">
-                {!user && (
-                  <Link
-                    to="/login"
-                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
-                  >
-                    Sign in
-                  </Link>
-                )}
-
-                {!user && (
-                  <Link
-                    to="/register"
-                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
-                  >
-                    Sign Up
-                  </Link>
-                )}
-                {user && (
-                  <Link
-                    to="/courts"
-                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
-                  >
-                    Courts Available
-                  </Link>
-                )}
-                {user && (
-                    <Link
-                      to="/courts/create"
-                      className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                    >
-                      Create Court
-                    </Link>
-                  )}
-                {/* {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
-                    className={classNames(
-                      item.current ? 'bg-gray-100 text-gray-900' : 'hover:bg-gray-50',
-                      'block rounded-md py-2 px-3 text-base font-medium'
-                    )}
-                  >
-                    {item.name}
-                  </a>
-                ))} */}
-              </div>
-              {user && (
-                <div className="border-t border-gray-200 pt-4 pb-3">
-                  <div className="max-w-3xl mx-auto px-4 flex items-center sm:px-6">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src={"https://res.cloudinary.com/dmtc1wlgq/image/upload/v1641911896/media/avatar/default_zrdbiq.png"
-                        }
-                        alt=""
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <div className="text-base font-medium text-gray-800">
-                        {user && user.username}
-                      </div>
-                      <div className="text-sm font-medium text-gray-500">
-                        {user && user.email}
-                      </div>
-                    </div>
-                    <button
-                    type="button"
-                    className="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                  </div>
-                  <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
-                    {userNavigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.to}
-                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                    <button
-                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                      onClick={() => setModal(true)}
-                    >
-                      {" "}
-                      Logout
-                    </button>
-                  </div>
-                </div>
-              )}
-            </Popover.Panel>
           </>
         )}
       </Popover>

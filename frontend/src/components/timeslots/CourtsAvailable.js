@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
 import AuthContext from '../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import Sidebar from '../layouts/Sidebar';
+import "../layouts/sidebar.css";
 
 
 const CourtsAvailable = () => {
@@ -26,12 +27,15 @@ const CourtsAvailable = () => {
 
 
       return (
+        <div className="page-container">
+    <Sidebar />
         <div>
           {data.map((owner, index) => (
             <button key={owner.id} style={{fontSize: '20px', padding: '10px 20px'}} onClick={() => navigate(`/courts/${owner.id}`)}>
             {owner.username}
           </button>
           ))}
+        </div>
         </div>
       );
 }
