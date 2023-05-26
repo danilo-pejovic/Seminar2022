@@ -190,15 +190,37 @@ const fetchData = (date) => {
     }, [])
 
     const CalendarContainer = styled.div`
-  position: relative;
-  justify-content: center;
-  z-index: 1;
-  width: 25%;
-`;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    width: 25%;
+    margin: 0 auto;
+  `;
 const ContentContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+`;
+
+const CustomCalendar = styled(Calendar)`
+  .react-calendar {
+    width: 300px;
+    font-family: Arial, sans-serif;
+  }
+
+  .react-calendar__tile--active {
+    background-color: teal;
+    color: white;
+  }
+
+  .react-calendar__navigation {
+    button {
+      font-size: 20px;
+      padding: 10px;
+    }
+  }
 `;
 
 const toggleCollapse = () => {
@@ -210,10 +232,10 @@ const toggleCollapse = () => {
     return (
       <div className="page-container">
     <Sidebar />
-        <div>
+        <div className='mt-8 justify-center'>
           <CalendarContainer>
-                <Calendar onChange={handleChange} value={date} />
-                <p>Selected Date: {date.toISOString().slice(0, 10)}</p>
+                <CustomCalendar onChange={handleChange} value={date} />
+                
           </CalendarContainer>
           <ContentContainer>
                 {data.map((court, index1) => ( 

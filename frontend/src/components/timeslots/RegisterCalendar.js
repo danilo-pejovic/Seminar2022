@@ -174,7 +174,7 @@ export default function Register() {
     <div className="page-container">
     <Sidebar />
     <div className="flex h-screen" >
-      <div className="w-1/3 bg-teal-500">
+      <div className="w-1/3 white">
       <div className="max-w-md w-full space-y-8">
 
         <div className="text-center">
@@ -191,7 +191,7 @@ export default function Register() {
               setRefresh(prevRefresh => !prevRefresh);
             }}
           >
-             {refresh_page.toString()}
+             {calendar.name}
           </DeleteCalendarButton>
         ))}
         </div>

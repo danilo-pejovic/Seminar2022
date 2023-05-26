@@ -172,12 +172,14 @@ export default function Profile() {
 
   return (
     <>
-      <div className="mt-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="mt-8 flex">
+    <div className="max-w-4xl mx-auto mr-4 px-4 sm:px-6 lg:px-8 flex-grow ml-20">
+      <div className="mt-8 mr-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg leading-6 font-medium text-gray-900">
             Update Profile
           </h2>
-          <div className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-6">
             <div className="mt-4  md:mt-0">
               <div className="flex items-center">
                 <label htmlFor="picture" className="relative cursor-pointer">
@@ -254,10 +256,11 @@ export default function Profile() {
             <span>Update</span>
           </button>
         </div>
+      
       </div>
 
       <div className="mt-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg leading-6 font-medium text-gray-900">
             Change Password
           </h2>
@@ -323,40 +326,42 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <div className="mt-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      </div>
+      <div className="mt-8 flex flex-grow justify-center">
+<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow">
           <h2 className="text-lg leading-6 font-medium text-gray-900">
             Timeslots
           </h2>
           <div className="grid grid-cols-2 gap-4 mt-4">
-  <div className="overflow-y-auto max-h-80">
-    <h3 className="text-lg leading-6 font-medium text-gray-900">
-      Past Timeslots
-    </h3>
-    <ul>
-      {pastTimeslots.map(timeslot => (
+            <div className="overflow-y-auto max-h-80">
+              <h3 className="text-lg leading-6 font-medium text-gray-900">
+                Past Timeslots
+              </h3>
+              <ul>
+              {pastTimeslots.map(timeslot => (
         <li key={timeslot.id}>
           {timeslot.timeslote_date} - {timeslot.end}
         </li>
       ))}
-    </ul>
-  </div>
-  <div className="overflow-y-auto max-h-80">
-    <h3 className="text-lg leading-6 font-medium text-gray-900">
-      Upcoming Timeslots
-    </h3>
-    <ul>
-      {upcomingTimeslots.map(timeslot => (
+              </ul>
+            </div>
+            <div className="overflow-y-auto max-h-80">
+              <h3 className="text-lg leading-6 font-medium text-gray-900">
+                Upcoming Timeslots
+              </h3>
+              <ul>
+              {upcomingTimeslots.map(timeslot => (
         <li key={timeslot.id}>
           <ManageReservationsButton key={timeslot.id} start_time={timeslot.start_time} timeslot_date={timeslot.timeslote_date} id={timeslot.id} calendar_id={timeslot.calendar} updateTimeslots={updateTimeslots} >
               {timeslot.timeslote_date} at {timeslot.start_time} 
               </ManageReservationsButton>
         </li>
       ))}
-    </ul>
-  </div>
-</div>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
       </div>
     </>
   );
