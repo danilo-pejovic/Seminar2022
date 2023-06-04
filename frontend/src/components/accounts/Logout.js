@@ -4,6 +4,7 @@ import { ExclamationIcon } from "@heroicons/react/outline";
 import AuthContext from '../../context/AuthContext'
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import API_IP from '../../utils/config';
 
 
 export default function Logout({ modal, setModal }) {

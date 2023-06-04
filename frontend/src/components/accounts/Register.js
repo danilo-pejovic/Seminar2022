@@ -1,6 +1,7 @@
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API_IP from '../../utils/config';
 
 import AuthContext from "../../context/AuthContext";
 
@@ -26,7 +27,7 @@ export default function Register() {
   let handleFormSubmit = async (e ) => {
     e.preventDefault()
     
-    let response = await fetch('http://localhost:8000/user/register/', {
+    let response = await fetch(`${API_IP}/user/register/`, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

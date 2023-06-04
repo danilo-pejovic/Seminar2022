@@ -1,18 +1,19 @@
 import { useState, useContext, useEffect } from "react";
 import { PencilIcon } from "@heroicons/react/solid";
 import AuthContext from "../../context/AuthContext";
+import API_IP from '../../utils/config';
 
 const ManageReservationsButton = (props) => {
   const [showModalCancel, setShowModalCancel] = useState(false);
-  const {id, is_available, timeslot_date, start_time, calendar_id, updateTimeslots} = props;
-  const [calendarData, setCalendarData] = useState();
+  const {id, is_available, timeslot_date, start_time, calendar_id, updateTimeslots, calendar_owner} = props;
+  // const [calendarData, setCalendarData] = useState();
   const [calendarOwnerData, setCalendarOwnerData] = useState();
 
   const handleCancelReservation = (id) => {
     const token = JSON.parse(localStorage.getItem("authTokens"));
     
 
-    fetch(`http://localhost:8000/schedule/timeslots/delete/${id}/`, {
+    fetch(`${API_IP}/schedule/timeslots/delete/${id}/`, {
         method: 'PUT',
         body: JSON.stringify({is_available: true}),
         headers: {
@@ -37,24 +38,24 @@ const ManageReservationsButton = (props) => {
  
 
   const handleCancel = async () => {
-        // Fetch calendar data
-      const calendarResponse = await fetch(`http://localhost:8000/schedule/${calendar_id}/`);
-      const calendarJson = await calendarResponse.json();
-      console.log(calendarJson);
-      setCalendarData(calendarJson);
-        // Fetch owner data
+        
+      // const calendarResponse = await fetch(`${API_IP}/schedule/${calendar_id}/`);
+      // const calendarJson = await calendarResponse.json();
+      // console.log(calendarJson);
+      // setCalendarData(calendarJson);
+        
       setShowModalCancel(true);
   };
-
-  const handleRefresh = async () => {
-    // Fetch calendar data
-  const calendarResponse = await fetch(`http://localhost:8000/schedule/${calendar_id}/`);
-  const calendarJson = await calendarResponse.json();
-  console.log(calendarJson);
-  setCalendarData(calendarJson);
-    // Fetch owner data
-  setShowModalCancel(true);
-};
+ // FOUND BETTER WAY TO FIX THIS ISSUE
+//   const handleRefresh = async () => {
+//    
+//   const calendarResponse = await fetch(`${API_IP}/schedule/${calendar_id}/`);
+//   const calendarJson = await calendarResponse.json();
+//   console.log(calendarJson);
+//   setCalendarData(calendarJson);
+//     
+//   setShowModalCancel(true);
+// };
 
   
 
@@ -67,8 +68,8 @@ const ManageReservationsButton = (props) => {
 </button>}
 {showModalCancel && (
           <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, background: 'rgba(0, 0, 0, 0.5)' }}>
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '20px', background: 'black' }}>
-              <p>Do you want to cancel your reservation at {calendarData.owner} at {timeslot_date}/{start_time}?</p>
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '20px', background: 'white' }}>
+              <p>Do you want to cancel your reservation at {calendar_owner}/{calendar_id} at {timeslot_date}/{start_time}?</p>
               <button style={{ marginBottom: '10px' }} onClick={() => handleCancelReservation(id)}>Confirm</button>
               <button style={{marginBottom: '10px'}} onClick={() => setShowModalCancel(false)}>Deny</button>
             </div>
@@ -105,7 +106,7 @@ export default function Profile() {
 
   const fetchTimeslots = () => {
     
-    fetch(`http://localhost:8000/schedule/timeslots/player/?owner=${user.user_id}`, {
+    fetch(`${API_IP}/schedule/timeslots/player/?owner=${user.user_id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -151,7 +152,7 @@ export default function Profile() {
     
     const token = JSON.parse(localStorage.getItem("authTokens"));
     console.log(user)
-    let response = await fetch(`http://localhost:8000/user/change_password/${user.user_id}/`, {
+    let response = await fetch(`${API_IP}/user/change_password/${user.user_id}/`, {
             method:'PUT',
             headers:{
                 'Content-Type':'application/json',
@@ -340,7 +341,7 @@ export default function Profile() {
               <ul>
               {pastTimeslots.map(timeslot => (
         <li key={timeslot.id}>
-          {timeslot.timeslote_date} - {timeslot.end}
+          {timeslot.timeslote_date}/{timeslot.start_time} at {timeslot.calendar_owner}/{timeslot.calendar}
         </li>
       ))}
               </ul>
@@ -352,8 +353,8 @@ export default function Profile() {
               <ul>
               {upcomingTimeslots.map(timeslot => (
         <li key={timeslot.id}>
-          <ManageReservationsButton key={timeslot.id} start_time={timeslot.start_time} timeslot_date={timeslot.timeslote_date} id={timeslot.id} calendar_id={timeslot.calendar} updateTimeslots={updateTimeslots} >
-              {timeslot.timeslote_date} at {timeslot.start_time} 
+          <ManageReservationsButton key={timeslot.id} start_time={timeslot.start_time} timeslot_date={timeslot.timeslote_date} id={timeslot.id} calendar_id={timeslot.calendar} calendar_owner={timeslot.calendar_owner} updateTimeslots={updateTimeslots} >
+          {timeslot.timeslote_date}/{timeslot.start_time} at {timeslot.calendar_owner}/{timeslot.calendar} 
               </ManageReservationsButton>
         </li>
       ))}

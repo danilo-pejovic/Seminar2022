@@ -2,6 +2,7 @@ import { LockClosedIcon } from "@heroicons/react/solid";
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from '../../context/AuthContext'
+import API_IP from '../../utils/config';
 
 export default function Login() {
   const [username, setUsername] = useState("");
