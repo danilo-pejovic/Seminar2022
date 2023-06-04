@@ -1,18 +1,3 @@
-# from django.http import HttpResponse, JsonResponse
-# from django.views.decorators.csrf import csrf_exempt
-# from rest_framework.parsers import JSONParser
-# from users.models import User
-# from rest_framework.decorators import api_view
-# from rest_framework import status, generics
-# from rest_framework.response import Response
-# from users.serializers import UserSerializer
-# from rest_framework import permissions
-# from appointment.permissions import IsOwnerOrReadOnly
-# from rest_framework.reverse import reverse
-# # Create your views here.
-
-
-
 
 from django.http import JsonResponse
 from rest_framework import permissions
@@ -25,6 +10,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import RegisterSerializer, UserDetailSerializer, ChangePasswordSerializer
 from rest_framework import generics
 from .models import User
+from users.permissions import ChangePasswordPermission
 
 
 class RegisterView(generics.CreateAPIView):
@@ -73,4 +59,5 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 class ChangePasswordView(generics.UpdateAPIView):
 
     queryset = User.objects.all()
+    permission_classes = (permissions.IsAuthenticated, ChangePasswordPermission)
     serializer_class = ChangePasswordSerializer

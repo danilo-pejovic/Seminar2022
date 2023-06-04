@@ -27,12 +27,14 @@ class TimeSlotUpdateSerializer(serializers.ModelSerializer):
 
 class TimeSlotSerializer(serializers.ModelSerializer):
     class Meta:
-        ordering = ['id']
+        ordering = ['start_time']
         model = TimeSlot
         fields = '__all__'
 
 class TimeSlotSerializerPlayer(serializers.ModelSerializer):
     # owner = serializers.ReadOnlyField(source='owner.username')
+    calendar = serializers.ReadOnlyField(source='calendar.name')
+    calendar_owner = serializers.ReadOnlyField(source='calendar.owner.username')
     class Meta:
         ordering = ['timeslote_date','start_time']
         model = TimeSlot

@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from schedule.models import Calendar, TimeSlot
+from schedule.permissions import IsProvider, IsCalendarOwner, IsTimeslotOwner
 from users.models import User
 from rest_framework.pagination import PageNumberPagination
 from django.http import HttpResponse, JsonResponse
@@ -13,7 +14,7 @@ from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics
 from schedule.serializers import TimeSlotSerializer, CalendarTimeSlotSerializer, TimeSlotUpdateSerializer, CalendarDeleteSerializer, TimeSlotSerializerPlayer
-
+from rest_framework import permissions
 
 class LargeResultsSetPagination(PageNumberPagination):
     page_size = 1000
@@ -22,6 +23,7 @@ class CalendarList(generics.ListCreateAPIView):
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
     filterset_fields = ('owner',)
+    permission_classes = [IsProvider]
 
     def perform_create(self, serializer):
       print(self.request)
@@ -37,6 +39,7 @@ class CalendarList(generics.ListCreateAPIView):
 class CalendarDetailList(generics.RetrieveAPIView):
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
+    
 
 class CalendarTimeSlotList(generics.ListAPIView):
   queryset = Calendar.objects.all()
@@ -53,6 +56,7 @@ class CalendarTimeSlotDetailList(generics.ListAPIView):
 class CalendarDelete(generics.DestroyAPIView):
     queryset = Calendar.objects.all()
     serializer_class = CalendarDeleteSerializer
+    permission_classes = [IsCalendarOwner]
     
 
 
@@ -62,6 +66,10 @@ class TimeSlotList(generics.ListAPIView):
     serializer_class = TimeSlotSerializer
     pagination_class = LargeResultsSetPagination
     filterset_fields = ('calendar','timeslote_date')
+    def get_queryset(self):
+        queryset = TimeSlot.objects.all()
+        queryset = queryset.order_by('timeslote_date', 'start_time')
+        return queryset
 
 class TimeSlotListPlayer(generics.ListAPIView):
     queryset = TimeSlot.objects.all()
@@ -98,6 +106,7 @@ class TimeSlotUpdate(generics.UpdateAPIView):
 class TimeSlotCancel(generics.UpdateAPIView):
   queryset = TimeSlot.objects.all()
   serializer_class = TimeSlotUpdateSerializer
+  permission_classes = [IsTimeslotOwner]
 
   def perform_update(self, serializer):
         print(self.request)

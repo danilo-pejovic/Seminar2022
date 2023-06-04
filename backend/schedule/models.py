@@ -35,12 +35,12 @@ class Calendar(models.Model):
              #start_timedelta=datetime.timedelta(hours=self.opening_time_weekday.hour,minutes=self.opening_time_weekday.minute)
              current_time=self.opening_time_weekday
              while current_time < self.closing_time_weekday:
-              TimeSlot.objects.create(calendar=self,start_time=current_time,timeslote_date=current_date, is_available=True,owner=self.owner)
+              TimeSlot.objects.create(calendar=self,start_time=current_time,timeslote_date=current_date, is_available=True,owner=self.owner,calendar_owner=self.owner)
               current_time = time_plus(current_time,datetime.timedelta(minutes=30))
             elif current_date.isoweekday() > 5:
              current_time=self.opening_time_weekend
              while current_time < self.closing_time_weekend:
-              TimeSlot.objects.create(calendar=self, start_time=current_time, timeslote_date=current_date, is_available=True, owner=self.owner)
+              TimeSlot.objects.create(calendar=self, start_time=current_time, timeslote_date=current_date, is_available=True, owner=self.owner, calendar_owner=self.owner)
               current_time = time_plus(current_time,datetime.timedelta(minutes=30))
             current_date = time_plus_date(current_date,datetime.timedelta(days=1))
 
@@ -50,6 +50,7 @@ class TimeSlot(models.Model):
     timeslote_date=models.DateField()
     is_available=models.BooleanField('Is timeslot available?', default=False)
     owner = models.ForeignKey(User,related_name='timeslots_rented', on_delete=models.CASCADE, blank=True,null=True)
+    calendar_owner = models.ForeignKey(User,related_name='timeslots_owned', on_delete=models.CASCADE, blank=True,null=True)
 
     def __str__(self):
         return f'Time slot from {self.start_time} that lasts 30 mins'
