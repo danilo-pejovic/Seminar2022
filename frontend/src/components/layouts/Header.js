@@ -6,6 +6,7 @@ import { SearchIcon } from "@heroicons/react/solid";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import AuthContext from "../../context/AuthContext";
 import Logout from "../accounts/Logout";
+import API_IP from '../../utils/config';
 
 const userNavigation = [{ name: "Profile", to: "/profile" }];
 

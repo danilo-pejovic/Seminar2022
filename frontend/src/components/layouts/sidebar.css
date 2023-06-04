@@ -1,0 +1,27 @@
+.sidebar {
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  background-color:rgb(17, 94, 89);
+}
+.page-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+}
+
+.content-container {
+  margin-left: 280px;
+}
+
+.content {
+  padding: 4rem; /* Adjust the padding as needed */
+}
+
+.start {
+  background-color: rgb(17, 94, 89); /* Change the color to the desired shade of green */
+}
+
+.start a,
+.start .nav-link {
+  color: #ffffff; /* Change the font color to white */
+}
