@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Sidebar from '../layouts/Sidebar';
 import "../layouts/sidebar.css";
 import AuthContext from "../../context/AuthContext";
+import API_IP from '../../utils/config';
 
 
 const timeOptions = () => {
@@ -28,7 +29,7 @@ const DeleteCalendarButton = (props) => {
   const handleConfirm = (id) => {
     const token = JSON.parse(localStorage.getItem("authTokens"));
 
-    fetch(`http://localhost:8000/schedule/delete/${id}/`, {
+    fetch(`${API_IP}/schedule/delete/${id}/`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token.access}`
@@ -116,7 +117,7 @@ export default function Register() {
   
 
   const fetchCalendars = () => {
-    fetch(`http://localhost:8000/schedule/?owner=${user.user_id}`, {
+    fetch(`${API_IP}/schedule/?owner=${user.user_id}`, {
       method:'GET',
       headers:{
           'Content-Type':'application/json'
@@ -139,7 +140,7 @@ export default function Register() {
   
 
     
-    let response = await fetch('http://localhost:8000/schedule/', {
+    let response = await fetch(`${API_IP}/schedule/`, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json',

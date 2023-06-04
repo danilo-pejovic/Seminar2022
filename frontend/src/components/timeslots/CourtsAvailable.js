@@ -3,6 +3,7 @@ import AuthContext from '../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../layouts/Sidebar';
 import "../layouts/sidebar.css";
+import API_IP from '../../utils/config';
 
 
 const CourtsAvailable = () => {
@@ -12,7 +13,7 @@ const CourtsAvailable = () => {
 
     // Move to utils later, for now ok since it is only called here
     useEffect(() => {
-        fetch('http://localhost:8000/user/user/?is_provider=true', {
+        fetch(`${API_IP}/user/user/?is_provider=true`, {
         method:'GET',
         headers:{
             'Content-Type':'application/json'

@@ -6,6 +6,7 @@ import { Calendar } from 'react-calendar';
 import styled from 'styled-components';
 import Sidebar from '../layouts/Sidebar';
 import "../layouts/sidebar.css";
+import API_IP from '../../utils/config';
 
 
 const LargeButton = (props) => {
@@ -13,12 +14,15 @@ const LargeButton = (props) => {
     const [showModalCancel, setShowModalCancel] = useState(false);
     const {id, is_available} = props;
     const [isAvailable, setIsAvailable] = useState(is_available);
+    let {user} = useContext(AuthContext)
+    const [owner, setOwner] = useState(props.owner)
 
     const handleConfirm = (id) => {
         const token = JSON.parse(localStorage.getItem("authTokens"));
+        console.log(owner)
         
 
-        fetch(`http://localhost:8000/schedule/timeslots/update/${id}/`, {
+        fetch(`${API_IP}/schedule/timeslots/update/${id}/`, {
             method: 'PUT',
             body: JSON.stringify({is_available: false}),
             headers: {
@@ -31,7 +35,7 @@ const LargeButton = (props) => {
             // handle response
             setShowModal(false);
             setIsAvailable(false);
-            
+            setOwner(user.user_id)
             //window.location.reload(false);
         })
         .catch(error => {
@@ -42,7 +46,7 @@ const LargeButton = (props) => {
       const token = JSON.parse(localStorage.getItem("authTokens"));
       
 
-      fetch(`http://localhost:8000/schedule/timeslots/delete/${id}/`, {
+      fetch(`${API_IP}/schedule/timeslots/delete/${id}/`, {
           method: 'PUT',
           body: JSON.stringify({is_available: true}),
           headers: {
@@ -88,7 +92,7 @@ const LargeButton = (props) => {
             {props.children}
           </button>
         }
-        {showModal && (
+        {showModal &&  (
           <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, background: 'rgba(0, 0, 0, 0.5)' }}>
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '20px', background: 'white' }}>
               <p>Confirm or deny booking?</p>
@@ -97,7 +101,7 @@ const LargeButton = (props) => {
             </div>
           </div>
         )}
-        {showModalCancel && (
+        {showModalCancel && (user.user_id==owner) &&(
           <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, background: 'rgba(0, 0, 0, 0.5)' }}>
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '20px', background: 'white' }}>
               <p>Do you want to cancel your reservation?</p>
@@ -135,7 +139,7 @@ const CalendarDetail = (props) => {
   }
 
   const fetchObject = (id,date) => {
-    return fetch(`http://localhost:8000/schedule/timeslots/?calendar=${id}&timeslote_date=${date.toISOString().substring(0, 10)}`, {
+    return fetch(`${API_IP}/schedule/timeslots/?calendar=${id}&timeslote_date=${date.toISOString().substring(0, 10)}`, {
         method:'GET',
         headers:{
             'Content-Type':'application/json'
@@ -154,7 +158,7 @@ const CalendarDetail = (props) => {
 
 const fetchData = (date) => {
     // Make the first fetch request to get the list of court IDs associated with 1 owenr
-    fetch(`http://localhost:8000/schedule/?owner=${id}`, {
+    fetch(`${API_IP}/schedule/?owner=${id}`, {
         method:'GET',
         headers:{
             'Content-Type':'application/json'
@@ -246,7 +250,7 @@ const toggleCollapse = () => {
                     {!collapsed && (
                     <div>
                     {court.timeslots.results.map((timeslot, index) => 
-                    <LargeButton key={timeslot.id} is_available={timeslot.is_available} id={timeslot.id} >
+                    <LargeButton key={timeslot.id} is_available={timeslot.is_available} owner={timeslot.owner} id={timeslot.id} >
                     {timeslot.start_time}
                     </LargeButton> )}
                     </div>)}
