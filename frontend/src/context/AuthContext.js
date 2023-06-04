@@ -1,6 +1,7 @@
 import {createContext, useState, useEffect} from "react"
 import jwt_decode from "jwt-decode";
 import {useNavigate } from 'react-router-dom'
+import API_IP from '../utils/config';
 const AuthContext = createContext()
 
 export default AuthContext;
@@ -13,7 +14,7 @@ export const AuthProvider = ({children}) => {
 
     let loginUser = async (e ) => {
         e.preventDefault()
-        let response = await fetch('http://localhost:8000/user/token/', {
+        let response = await fetch(`${API_IP}/user/token/`, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -42,7 +43,7 @@ export const AuthProvider = ({children}) => {
 
     let updateToken = async ()=> {
 
-        let response = await fetch('http://localhost:8000/user/token/refresh/', {
+        let response = await fetch(`${API_IP}/user/token/refresh/`, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
