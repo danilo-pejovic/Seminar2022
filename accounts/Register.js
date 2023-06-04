@@ -1,6 +1,7 @@
 import React, { useState, useEffect,useContext } from "react";
 import { Text, View, TouchableOpacity, TextInput, Picker } from "react-native";
 import AuthContext from "../context/AuthContext";
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -11,13 +12,13 @@ export default function Register() {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
-  
+  const navigation = useNavigation();
 
   let handleFormSubmit = async () => {
     
     console.log(JSON.stringify({
       'username': name,
-      'email': startDate,
+      'email': email,
       'password': password,
       'password2': confirmpassword,
       'first_name': firstname,
@@ -27,15 +28,15 @@ export default function Register() {
     }))
     
 
-    let response = await fetch("http://192.168.1.211:8000/schedule/", {
+    let response = await fetch(`${API_IP}/user/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         'username': name,
-        'email': startDate,
-        'password': endDate,
+        'email': email,
+        'password': password,
         'password2': confirmpassword,
         'first_name': firstname,
         'last_name': lastname
@@ -80,8 +81,8 @@ export default function Register() {
           onChangeText={(text) => setLastName(text)}
         />
     </View>
-<TouchableOpacity onPress={handleFormSubmit(authTokens)}>
-            <Text>Submit</Text>
+    <TouchableOpacity onPress={() => handleFormSubmit(navigation)}>
+  <Text>Submit</Text>
 </TouchableOpacity>
 </View>
 );
