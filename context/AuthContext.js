@@ -4,11 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const AuthContext = createContext()
-
+import API_IP from '../utils/config';
 export default AuthContext;
 
 export const AuthProvider = ({children}) => {
     let [authTokens,setAuthTokens] = useState('')
+    const [user,setUser] = useState()
     const navigation = useNavigation();
 
     const clearStorage = async () => {
@@ -46,30 +47,34 @@ export const AuthProvider = ({children}) => {
         }
     
 
-      let user = null
-      async function setUser() {
+    //   async function setUser() {
           
-        let user = null
-          try {
-            const data = await AsyncStorage.getItem('authTokens');
-            if (data) {
-                user = jwt_decode(data);
-            } else {
-                user = null;
-            }
-          } catch (error) {
-            console.error(error);
-          }
+    //     let user = null
+    //       try {
+    //         const data = await AsyncStorage.getItem('authTokens');
+    //         if (data) {
+
+    //             user = jwt_decode(data);
+    //             console.log("   **************")
+    // console.log(authTokens);
+    // console.log(user);
+    // console.log("******     *******")
+    //         } else {
+    //             user = null;
+    //         }
+    //       } catch (error) {
+    //         console.error(error);
+    //       }
         
-          return user;
-        }
-        setUser()
+    //       return user;
+    //     }
+        
     let [loading, setLoading] = useState(true)
     //let navigate = useNavigate()
 
     let loginUser = async (username,password ) => {
         
-        let response = await fetch('http://192.168.43.187:8000/user/token/', {
+        let response = await fetch(`${API_IP}/user/token/`, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -81,6 +86,7 @@ export const AuthProvider = ({children}) => {
         if(response.status===200){
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
+            
             storeJWT(data)
             navigation.navigate('CourtsAvailable')
         }else{
@@ -93,6 +99,7 @@ export const AuthProvider = ({children}) => {
 
         setAuthTokens(null)
         setUser(null)
+        navigation.navigate('Home')
         await clearStorage()
         
     }
@@ -102,7 +109,7 @@ export const AuthProvider = ({children}) => {
 
         console.log(authTokens)
 
-        let response = await fetch('http://192.168.43.187:8000/user/token/refresh/', {
+        let response = await fetch(`${API_IP}/user/token/refresh/`, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -117,6 +124,7 @@ export const AuthProvider = ({children}) => {
         if (response.status === 200){
             console.log('Good tokens!')
             setAuthTokens(data)
+            console.log(data)
             setUser(jwt_decode(data.access))
             await AsyncStorage.setItem('authTokens', JSON.stringify(data))
         }else{
