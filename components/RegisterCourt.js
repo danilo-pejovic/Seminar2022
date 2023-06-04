@@ -3,11 +3,14 @@ import { Text, View, TouchableOpacity, TextInput } from "react-native";
 import {Picker} from '@react-native-picker/picker';
 import AuthContext from "../context/AuthContext";
 
+
 const timeOptions = () => {
   let options = [];
   for (let i = 0; i < 24; i++) {
     let hour = i < 10 ? `0${i}` : `${i}`;
-    options.push(<Picker.Item label={`${hour}:00`} value={`${hour}:00:00`} />);
+    options.push(
+      <Picker.Item key={i} label={`${hour}:00`} value={`${hour}:00:00`} />
+    );
   }
   return options;
 };
@@ -36,8 +39,8 @@ export default function RegisterCalendar() {
         
       }))
     
-
-    let response = await fetch("http://192.168.43.187:8000/schedule/", {
+    // 192.168.43.187
+    let response = await fetch(`${API_IP}/schedule/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

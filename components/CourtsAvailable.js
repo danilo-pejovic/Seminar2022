@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AuthContext from '../context/AuthContext';
+import API_IP from '../utils/config';
+
 
 const CourtsAvailable = () => {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
-
+  let {user, authTokens} = useContext(AuthContext);
   useEffect(() => {
-    fetch('http://192.168.43.187:8000/user/user/?is_provider=true', {
+    console.log("*****************")
+    console.log(authTokens);
+    console.log(user);
+    console.log("*****************")
+    fetch(`${API_IP}/user/user/?is_provider=true`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
