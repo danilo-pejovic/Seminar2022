@@ -156,7 +156,7 @@ function DrawerNavigator() {
           headerStyle: { backgroundColor: '#1D1D1D' },
           headerTintColor: 'white',
           headerTitleStyle: { fontWeight: 'bold' }, }}/>}
-      { user && <Drawer.Screen name="Profile" component={Profile} options={{ title: 'User Profile',headerRight: CustomHeaderRight,
+      { user && null && <Drawer.Screen name="Profile" component={Profile} options={{ title: 'User Profile',headerRight: CustomHeaderRight,
           headerStyle: { backgroundColor: '#1D1D1D' },
           headerTintColor: 'white',
           headerTitleStyle: { fontWeight: 'bold' }, }}/>}

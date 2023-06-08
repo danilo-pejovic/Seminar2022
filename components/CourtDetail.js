@@ -11,7 +11,7 @@ const LargeButton = (props) => {
   const [isAvailable, setIsAvailable] = useState(props.is_available);
   let {authTokens,user} = useContext(AuthContext)
   let [owner, setOwner] = useState(props.owner);
-  
+  const [calendar_owner, setCalendarOwner] = useState(props.calendar_owner);
   useEffect(() => {
     
     setIsAvailable(props.is_available);
@@ -133,7 +133,7 @@ const LargeButton = (props) => {
           </View>
         </View>
       </Modal>
-      <Modal transparent visible={showModalCancel && (owner==user.user_id)}>
+      <Modal transparent visible={showModalCancel && (owner==user.user_id || calendar_owner==user.user_id)}>
         <View
           style={{
             flex: 1,
@@ -325,7 +325,7 @@ const CourtDetail = ({ route: { params } }) => {
         <View key={index1} style={{flex: 1, width: Dimensions.get('window').width / 4}}>
         <Text> Court {index1}</Text>
             {court.results.map((timeslot, index) => (
-                <LargeButton key={timeslot.id} is_available={timeslot.is_available} id={timeslot.id} owner={timeslot.owner}>
+                <LargeButton key={timeslot.id} is_available={timeslot.is_available} id={timeslot.id} owner={timeslot.owner} calendar_owner={timeslot.calendar_owner}>
                 <Text>{timeslot.start_time}</Text>
                 </LargeButton>
                                 ))}

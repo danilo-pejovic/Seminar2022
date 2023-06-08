@@ -2,7 +2,7 @@ import React, { useState, useEffect,useContext } from "react";
 import { Text, View, TouchableOpacity, TextInput, Picker } from "react-native";
 import AuthContext from "../context/AuthContext";
 import { useNavigation } from '@react-navigation/native';
-
+import API_IP from '../utils/config';
 
 
 export default function Register() {
@@ -54,7 +54,7 @@ export default function Register() {
 
   return (
     <View>
-      <Text>Court schedule creation</Text>
+      <Text>Register user</Text>
       <View>
         <TextInput
           placeholder="Username"
