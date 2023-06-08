@@ -79,8 +79,7 @@ export default function Landing() {
             </div>
             <h6 className="mb-3 text-xl font-bold leading-5">Basketball Icon</h6>
             <p className="mb-3 text-sm text-gray-900">
-              Place holder text. This landing page (and some components further on) was created using html components for some cooking site (that as far as I can look for now)
-              is no longer there. So there may be some hints about cooking that I missed.
+              Place holder text. 
             </p>
           </div>
           <div className="max-w-md sm:mx-auto sm:text-center">

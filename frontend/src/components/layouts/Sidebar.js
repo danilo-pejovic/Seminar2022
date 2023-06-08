@@ -216,12 +216,7 @@ function Sidebar() {
               </QuickCancelButton> 
             </li> ))}
         
-        <li>
-          <a href="#" className="nav-link text-white">
-            <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"/></svg>
-            More reservations
-          </a>
-        </li>
+        
         <li>
           <a href="#" className="nav-link text-white">
             <svg className="bi me-2" width="16" height="16"><use xlinkHref="#people-circle"/></svg>
