@@ -24,7 +24,7 @@ RUN pip install -r requirements_prod.txt
 COPY ./entrypoint.sh /usr/src/entrypoint.sh
 RUN sed -i 's/\r$//g' /usr/src/entrypoint.sh
 RUN chmod +x /usr/src/entrypoint.sh
-
+RUN mkdir /backend/staticfiles
 # run entrypoint.sh
 RUN echo ls -l
 ENTRYPOINT ["/usr/src/entrypoint.sh"]
