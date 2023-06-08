@@ -12,7 +12,7 @@ import API_IP from '../../utils/config';
 const LargeButton = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [showModalCancel, setShowModalCancel] = useState(false);
-    const {id, is_available} = props;
+    const {id, is_available, calendar_owner} = props;
     const [isAvailable, setIsAvailable] = useState(is_available);
     let {user} = useContext(AuthContext)
     const [owner, setOwner] = useState(props.owner)
@@ -101,7 +101,7 @@ const LargeButton = (props) => {
             </div>
           </div>
         )}
-        {showModalCancel && (user.user_id==owner) &&(
+        {showModalCancel && (user.user_id==owner || calendar_owner==user.user_id) &&(
           <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, background: 'rgba(0, 0, 0, 0.5)' }}>
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '20px', background: 'white' }}>
               <p>Do you want to cancel your reservation?</p>
@@ -250,7 +250,7 @@ const toggleCollapse = () => {
                     {!collapsed && (
                     <div>
                     {court.timeslots.results.map((timeslot, index) => 
-                    <LargeButton key={timeslot.id} is_available={timeslot.is_available} owner={timeslot.owner} id={timeslot.id} >
+                    <LargeButton key={timeslot.id} is_available={timeslot.is_available} owner={timeslot.owner} id={timeslot.id} calendar_owner={timeslot.calendar_owner}>
                     {timeslot.start_time}
                     </LargeButton> )}
                     </div>)}
