@@ -10,10 +10,6 @@ const CourtsAvailable = () => {
   const navigation = useNavigation();
   let {user, authTokens} = useContext(AuthContext);
   useEffect(() => {
-    console.log("*****************")
-    console.log(authTokens);
-    console.log(user);
-    console.log("*****************")
     fetch(`${API_IP}/user/user/?is_provider=true`, {
       method: 'GET',
       headers: {

@@ -213,10 +213,11 @@ const CourtDetail = ({ route: { params } }) => {
       const ids = data.results;
       //console.log(ids)
       //console.log(date.toISOString().substring(0, 10))
+      console.log(ids)
   
-      const promises = ids.map((id) => fetchObject(id.id, date));
+      const promises = ids.map(id => fetchObject(id.id, date).then(timeslots => ({ name: id.name, timeslots })));
       const objects = await Promise.all(promises);
-      
+      console.log(objects)
       setData(objects);
 
     } catch (error) {
@@ -234,7 +235,7 @@ const CourtDetail = ({ route: { params } }) => {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to get object with ID: ${id}`);
+        throw new Error(`Failed to get  object with ID: ${id}`);
       }
 
       const data = await response.json();
@@ -323,8 +324,8 @@ const CourtDetail = ({ route: { params } }) => {
 <ScrollView horizontal={true} vertical={true} style={{flexDirection: 'row'}}>
 {data.map((court, index1) => (
         <View key={index1} style={{flex: 1, width: Dimensions.get('window').width / 4}}>
-        <Text> Court {index1}</Text>
-            {court.results.map((timeslot, index) => (
+        <Text> {court.name}</Text>
+            {court.timeslots.results.map((timeslot, index) => (
                 <LargeButton key={timeslot.id} is_available={timeslot.is_available} id={timeslot.id} owner={timeslot.owner} calendar_owner={timeslot.calendar_owner}>
                 <Text>{timeslot.start_time}</Text>
                 </LargeButton>
