@@ -2,7 +2,7 @@ import React, { useState, useEffect,useContext } from "react";
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
 import {Picker} from '@react-native-picker/picker';
 import AuthContext from "../context/AuthContext";
-
+import API_IP from "../utils/config";
 
 const timeOptions = () => {
   let options = [];
