@@ -144,7 +144,7 @@ export const AuthProvider = ({children}) => {
         
         async function updateTokenAndSetAuthTokens() {
             authTokens = await setAuthTokensAsync();
-            console.log("AuthTokens:", authTokens);
+            
             updateToken()
         }
 
@@ -168,7 +168,7 @@ export const AuthProvider = ({children}) => {
         }, updateTime)
         return ()=> clearInterval(interval)
 
-    }, [authTokens, loading])
+    }, [])
 
 
     let contextData ={
